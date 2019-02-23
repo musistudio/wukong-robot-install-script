@@ -18,7 +18,8 @@ install_wukong(){
         echo "正在为您安装wukong-robot,安装目录~/wukong-robot/"
         sudo git clone ${wukong} ~/wukong-robot
         brew install portaudio sox ffmpeg swig
-        pip3 install pyaudio
+        sudo pip3 install --upgrade pip
+        sudo pip3 install pyaudio
         cd ~/wukong-robot
         pip3 install -r requirements.txt
         git clone ${snowboy} ~/snowboy
@@ -26,32 +27,61 @@ install_wukong(){
         make
         sudo cp _snowboydetect.so ~/wukong-robot/snowboy/
         sudo rm -rf ~/snowboy
+        sudo chmod -R 777 ~/wukong-robot/
     elif [[ $os == "linux" ]]
     then
         echo "正在为您安装wukong-robot,安装目录~/wukong-robot/"
+        sudo apt-get update && sudo apt-get upgrade -y
         sudo git clone ${wukong} ~/wukong-robot
         sudo apt-get install python-pyaudio python3-pyaudio sox pulseaudio libsox-fmt-all ffmpeg
-        pip3 install pyaudio
+        sudo pip3 install --upgrade pip
+        sudo pip3 install pyaudio distribute
         cd ~/wukong-robot
-        pip3 install -r requirements.txt
+        sudo pip3 install -r requirements.txt
         sudo apt-get install python3-dev
         sudo apt-get install python3-all-dev
         sudo mkdir ~/install_temp && cd ~/install_temp
-        wget http://hahack-1253537070.file.myqcloud.com/misc/swig-3.0.10.tar.gz
-        tar xvf swig-3.0.10.tar.gz
+        sudo wget http://hahack-1253537070.file.myqcloud.com/misc/swig-3.0.10.tar.gz
+        sudo tar xvf swig-3.0.10.tar.gz
         cd swig-3.0.10
-        sudo apt-get -y update
         sudo apt-get install -y libpcre3 libpcre3-dev
         ./configure --prefix=/usr --without-clisp --without-maximum-compile-warnings
-        make && make install
-        install -v -m755 -d /usr/share/doc/swig-3.0.10
+        sudo make && sudo make install
+        sudo install -v -m755 -d /usr/share/doc/swig-3.0.10
         sudo cp -v -R Doc/* /usr/share/doc/swig-3.0.10
         sudo apt-get install -y libatlas-base-dev
-        git clone ${snowboy} ~/snowboy
+        sudo git clone ${snowboy} ~/snowboy
         cd ~/snowboy/swig/Python3
-        make
+        sudo make
         sudo cp _snowboydetect.so ~/wukong-robot/snowboy/
         sudo rm -rf ~/install_temp/ ~/snowboy/
+    elif [[ $os == "raspberrypi" ]]
+    then
+        echo "正在为您安装wukong-robot,安装目录~/wukong-robot/"
+        sudo apt-get update && sudo apt-get  -y upgrade
+        sudo apt-get remove -y python3 python3-pip
+        sudo apt-get install -y python3 python3-pip
+        sudo git clone ${wukong} ~/wukong-robot
+        sudo apt-get install -y python-pyaudio python3-pyaudio sox pulseaudio libsox-fmt-all ffmpeg
+        sudo pip3 install --upgrade pip
+        cd ~/wukong-robot
+        sudo pip3 install -r requirements.txt
+        sudo apt-get install -y python3-dev python3-all-dev
+        sudo mkdir ~/install_temp && cd ~/install_temp
+        sudo wget http://hahack-1253537070.file.myqcloud.com/misc/swig-3.0.10.tar.gz
+        sudo tar xvf swig-3.0.10.tar.gz
+        cd swig-3.0.10
+        sudo apt-get install -y libpcre3 libpcre3-dev libatlas-base-dev
+        ./configure --prefix=/usr --without-clisp --without-maximum-compile-warnings
+        sudo make && sudo make install
+        sudo install -v -m755 -d /usr/share/doc/swig-3.0.10
+        sudo cp -v -R Doc/* /usr/share/doc/swig-3.0.10
+        sudo git clone ${snowboy} ~/snowboy
+        cd ~/snowboy/swig/Python3
+        sudo make
+        sudo cp _snowboydetect.so ~/wukong-robot/snowboy/
+        sudo rm -rf ~/install_temp/ ~/snowboy/
+        sudo chmod -R 777 ~/wukong-robot/
     fi
 clear
 echo "wukong-robot已安装完成!"
@@ -75,7 +105,7 @@ then
     else
         install_wukong "macos"
     fi
-elif [[ ${os_name[0]} == "Linux" ]]
+elif [[ ${os_name[0]} == "Linux" && ${os_name[1]} != "raspberrypi" ]]
 then
     read -p "您的系统是否为Linux? [Y/n]:" confirm
     if [[ ${confirm} != "Y" && ${confirm} != "y" && ${confirm} != "" ]]
@@ -85,7 +115,14 @@ then
     else
         install_wukong "linux"
     fi
+elif [[ ${os_name[0]} == "Linux" && ${os_name[1]} == "raspberrypi" ]]
+then   
+    read -p "您的系统是否为Raspbian? [Y/n]:" confirm    
+    if [[ ${confirm} != "Y" && ${confirm} != "y" && ${confirm} != "" ]]
+    then                      
+        echo "系统检测错误，已退出安装，请反馈给作者"
+        exit                  
+    else                      
+        install_wukong "raspberrypi"
+    fi 
 fi
-
-
-
