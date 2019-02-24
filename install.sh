@@ -110,7 +110,7 @@ install_wukong(){
         sudo cp _snowboydetect.so ~/wukong-robot/snowboy/
         sudo rm -rf ~/install_temp/ ~/snowboy/
         sed -i '$a export PULSE_SERVER=tcp:localhost' ~/.bashrc
-        source ~/.bash_profile
+        source ~/.bashrc
         sudo chmod -R 777 ~/wukong-robot/
     fi
 clear
@@ -127,8 +127,7 @@ os_name=(${system// / })
 if [ ${os_name[0]} == "Darwin" ]
 then
     read -p "您的系统是否为MacOS? [Y/n]:" confirm
-    echo $confirm
-    if [[ ${confirm} == "Y" && ${confirm} != "y" && ${confirm} != "" ]]
+    if [[ ${confirm} != "Y" && ${confirm} != "y" && ${confirm} != "" ]]
     then
         echo "系统检测错误，已退出安装，请反馈给作者"
         exit
