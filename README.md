@@ -31,7 +31,7 @@ sudo wget http://wukong-install.oss-cn-hangzhou.aliyuncs.com/changeSource.sh && 
 sudo wget http://wukong-install.oss-cn-hangzhou.aliyuncs.com/choiceDevice.py && sudo python3 choiceDevice.py
 ```
 
-### 说明 for win10's Ubuntu:
+### 说明 for WSL(win10的Ubuntu子系统):
 1. win10子系统使用前需要在win10上开启pulseaudio-server      
     下载解压 [pulseaudio.zip](http://wukong-install.oss-cn-hangzhou.aliyuncs.com/pulseaudio.zip) 并在CMD里运行bin目录下的 pulseaudio.exe
 2. 在子系统里(ubuntu)运行以下命令:
