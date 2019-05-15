@@ -16,8 +16,8 @@ install_wukong(){
     if [[ $os == "macos" ]]
     then
         echo "正在为您安装wukong-robot,安装目录~/wukong-robot/"
+        brew install portaudio sox ffmpeg swig git 
         sudo git clone ${wukong} ~/wukong-robot
-        brew install portaudio sox ffmpeg swig
         sudo pip3 install --upgrade pip
         sudo pip3 install pyaudio
         cd ~/wukong-robot
@@ -28,12 +28,15 @@ install_wukong(){
         sudo cp _snowboydetect.so ~/wukong-robot/snowboy/
         sudo rm -rf ~/snowboy
         sudo chmod -R 777 ~/wukong-robot/
+        cd ~/wukong-robot/
+        sudo git remote rm origin
+        sudo git remote add origin https://github.com/wzpan/wukong-robot.git
     elif [[ $os == "linux" ]]
     then
         echo "正在为您安装wukong-robot,安装目录~/wukong-robot/"
         sudo apt-get update && sudo apt-get upgrade -y
+        sudo apt-get install python3 python3-pip python-pyaudio python3-pyaudio sox pulseaudio libsox-fmt-all ffmpeg git
         sudo git clone ${wukong} ~/wukong-robot
-        sudo apt-get install python3 python3-pip python-pyaudio python3-pyaudio sox pulseaudio libsox-fmt-all ffmpeg
         sudo pip3 install --upgrade pip
         sudo pip3 install pyaudio distribute
         cd ~/wukong-robot
@@ -56,12 +59,15 @@ install_wukong(){
         sudo cp _snowboydetect.so ~/wukong-robot/snowboy/
         sudo rm -rf ~/install_temp/ ~/snowboy/
         sudo chmod -R 777 ~/wukong-robot/
+        cd ~/wukong-robot/
+        sudo git remote rm origin
+        sudo git remote add origin https://github.com/wzpan/wukong-robot.git
     elif [[ $os == "raspberrypi" ]]
     then
         echo "正在为您安装wukong-robot,安装目录~/wukong-robot/"
         sudo apt-get update && sudo apt-get  -y upgrade
+        sudo apt-get install python3 python3-pip python-pyaudio python3-pyaudio sox pulseaudio libsox-fmt-all ffmpeg git
         sudo git clone ${wukong} ~/wukong-robot
-        sudo apt-get install -y python3 python3-pip python-pyaudio python3-pyaudio sox pulseaudio libsox-fmt-all ffmpeg
         sudo pip3 install --upgrade pip
         cd ~/wukong-robot
         sudo pip3 install -r requirements.txt
@@ -81,13 +87,16 @@ install_wukong(){
         sudo cp _snowboydetect.so ~/wukong-robot/snowboy/
         sudo rm -rf ~/install_temp/ ~/snowboy/
         sudo chmod -R 777 ~/wukong-robot/
+        cd ~/wukong-robot/
+        sudo git remote rm origin
+        sudo git remote add origin https://github.com/wzpan/wukong-robot.git
     elif [[ $os == "win10" ]]
     then
         echo "正在为您安装wukong-robot,安装目录~/wukong-robot/"
         sudo add-apt-repository ppa:therealkenc/wsl-pulseaudio
         sudo apt-get update && sudo apt-get upgrade -y
+        sudo apt-get install python3 python3-pip python-pyaudio python3-pyaudio sox pulseaudio libsox-fmt-all ffmpeg git
         sudo git clone ${wukong} ~/wukong-robot
-        sudo apt-get install python3 python3-pip python-pyaudio python3-pyaudio sox pulseaudio libsox-fmt-all ffmpeg
         sudo pip3 install --upgrade pip
         sudo pip3 install pyaudio distribute
         cd ~/wukong-robot
@@ -112,6 +121,9 @@ install_wukong(){
         sed -i '$a export PULSE_SERVER=tcp:localhost' ~/.bashrc
         source ~/.bashrc
         sudo chmod -R 777 ~/wukong-robot/
+        cd ~/wukong-robot/
+        sudo git remote rm origin
+        sudo git remote add origin https://github.com/wzpan/wukong-robot.git
     fi
 clear
 echo "wukong-robot已安装完成!"
@@ -145,7 +157,7 @@ then
         install_wukong "raspberrypi"
     fi 
 elif [[ ${os_name[0]} == "Linux" && ${os_name[2]} =~ "Microsoft" ]]
-then   
+then
     read -p "您的系统是否为win10子系统? [Y/n]:" confirm    
     if [[ ${confirm} != "Y" && ${confirm} != "y" && ${confirm} != "" ]]
     then                 

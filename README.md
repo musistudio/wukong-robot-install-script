@@ -26,7 +26,7 @@ sudo pip3 install --upgrade --ignore-installed -r requirements.txt
 ```shell
 sudo wget http://wukong-install.oss-cn-hangzhou.aliyuncs.com/changeSource.sh && sudo chmod 777 changeSource.sh &&./changeSource.sh
 ```
-2. 增加选择录音和播放设备功能，如需使用请执行以下命令:
+2. 增加选择录音和播放设备功能，如需使用请执行以下命令(Respeaker用户请不要使用此脚本):
 ```shell
 sudo wget http://wukong-install.oss-cn-hangzhou.aliyuncs.com/choiceDevice.py && sudo python3 choiceDevice.py
 ```
