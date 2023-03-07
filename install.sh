@@ -2,12 +2,12 @@
 
 install_wukong(){
     os=$1
-    read -p "请选择安装源 [ALIYUN/github]:" source
+    read -p "请选择安装源 [gitee/github]:" source
     source=$(echo $source | tr 'A-Z' 'a-z')
-    if [[ ${source} == "aliyun" || ${source} == "" ]]
+    if [[ ${source} == "gitee" || ${source} == "" ]]
     then
-        wukong="https://code.aliyun.com/qingshanglishao/wukong-robot.git"
-        snowboy="https://code.aliyun.com/qingshanglishao/snowboy.git"
+        wukong="https://gitee.com/wzpan/wukong-robot.git"
+        snowboy="https://gitee.com/musistudio/snowboy.git"
     elif [[ $source == "github" ]]
     then
         wukong="https://github.com/wzpan/wukong-robot.git"
@@ -59,9 +59,6 @@ install_wukong(){
         sudo cp _snowboydetect.so ~/wukong-robot/snowboy/
         sudo rm -rf ~/install_temp/ ~/snowboy/
         sudo chmod -R 777 ~/wukong-robot/
-        cd ~/wukong-robot/
-        sudo git remote rm origin
-        sudo git remote add origin https://github.com/wzpan/wukong-robot.git
     elif [[ $os == "raspberrypi" ]]
     then
         echo "正在为您安装wukong-robot,安装目录~/wukong-robot/"
@@ -87,9 +84,6 @@ install_wukong(){
         sudo cp _snowboydetect.so ~/wukong-robot/snowboy/
         sudo rm -rf ~/install_temp/ ~/snowboy/
         sudo chmod -R 777 ~/wukong-robot/
-        cd ~/wukong-robot/
-        sudo git remote rm origin
-        sudo git remote add origin https://github.com/wzpan/wukong-robot.git
     elif [[ $os == "win10" ]]
     then
         echo "正在为您安装wukong-robot,安装目录~/wukong-robot/"
@@ -121,9 +115,6 @@ install_wukong(){
         sed -i '$a export PULSE_SERVER=tcp:localhost' ~/.bashrc
         source ~/.bashrc
         sudo chmod -R 777 ~/wukong-robot/
-        cd ~/wukong-robot/
-        sudo git remote rm origin
-        sudo git remote add origin https://github.com/wzpan/wukong-robot.git
     fi
 clear
 echo "wukong-robot已安装完成!"
